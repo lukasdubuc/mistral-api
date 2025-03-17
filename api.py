@@ -39,7 +39,11 @@ def chat():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Request failed", "details": str(e)}), 500
 
+import os
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host='
+
 
 
