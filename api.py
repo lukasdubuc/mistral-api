@@ -40,15 +40,17 @@ def chat():
         return jsonify({"error": "Request failed", "details": str(e)}), 500
 
 import os
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Mistral API is running!"
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
-    app.run(host='
-
-
-
-
-            
+    port = int(os.environ.get("PORT", 10000))  # Render assigns a port dynamically
+    app.run(host='0.0.0.0', port=port)
 
 
 
