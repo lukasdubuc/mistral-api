@@ -1,10 +1,11 @@
+import os
 import requests
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# 🔹 Your Mistral API Key
-API_KEY = "DyuEyWPGj6KEkebcSxiYhjtV4SgSrG20"
+# 🔹 Load Mistral API Key from environment variables
+API_KEY = os.getenv("MISTRAL_API_KEY", "YOUR_DEFAULT_KEY")  # Replace with a real key or set in Render
 
 # 🔹 API Endpoint and Headers
 MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
@@ -12,6 +13,11 @@ HEADERS = {
     "Authorization": f"Bearer {API_KEY}",
     "Content-Type": "application/json"
 }
+
+@app.route('/')
+def home():
+    """Health check route"""
+    return "Mistral API is live!"
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -39,23 +45,7 @@ def chat():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Request failed", "details": str(e)}), 500
 
-import os
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Mistral API is live!"
-
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.json
-    user_message = data.get("message", "")
-    return jsonify({"response": f"Hello, you said: {user_message}"})
-
-# Use Render's dynamic port
+# 🔹 Use Render's dynamic port
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 for local testing
+    port = int(os.environ.get("PORT", 10000))  # Default to 10000 for Render
     app.run(host="0.0.0.0", port=port)
-
