@@ -3,3 +3,4 @@ flask-cors
 requests
 fpdf
 PyPDF2
+beautifulsoup4
